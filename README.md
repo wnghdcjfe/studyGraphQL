@@ -3,10 +3,23 @@
 
 공부방법
 0. 그래프 QL 공식사이트
+ - Getting Started
+ - Running Express + GraphQL
+ - GraphQL Clients
+ - Basic Types
+ - Passing Arguments
+ - Object Types
+ - Mutations and Input Types
+
+여까지 하면 된다. 
+
 1. 책예제 : https://github.com/MoonHighway/learning-graphql/tree/master/chapter-03
  - 3장 : http://snowtooth.moonhighway.com/
+
 2. 승원 : https://velog.io/@cadenzah/graphql-node-01-introduction
+
 3. 채팅 : https://medium.com/wasd/graphql%EA%B3%BC-react%EB%A1%9C-%EC%B1%84%ED%8C%85-%EA%B5%AC%ED%98%84-server-side-672a289c9d14
+
 4. 책 훑어보기 
 
 ## 질문사항
@@ -73,3 +86,88 @@ var query = `mutation CreateMessage($input: MessageInput) {
 GraphQL에서 한글은 안됨
 
 type를 지정할 때 resolver와 같은 이름으로 지정해야 한다. 
+
+좋은 링크 : https://gist.github.com/eveporcello/12c0f5070fd1c0bc3d9f02906f7743a8
+
+아폴로 서버를 사용할 떄는 resolvers 에
+```js
+Query : {
+
+}, 
+Mutation : {
+
+}, 
+Subscription : {
+
+}, 
+Photo : {
+  
+}
+```
+
+이렇게 정리해서 한 객체에 집어넣게 된다. 
+
+그러나 그냥 root해서 넣는 아폴로 서비스가 아닌 graphqlHTTP를 사용할 때는 root를 이용해서 넣어야 한다. 
+
+input을 했으면 type도 무조건 설정해주어야 한다. 
+```js
+  input MessageInput{
+    content : String 
+    author : String
+  }
+  type Message {
+    id : ID!
+    content : String
+    author : String
+  }
+```
+
+input 은 말그대로 argument에나 쓰이는 것이며 그것을 인자로 받아서 반환할 "반환형이 무조건 필요하다. 또한 input은 새로운 변수명을 써야 한다. input 이름, type 이름 이런식으로 이름이 중복되면 안된다는 것이다. 즉, input 이름input 이런식의 변수명이 좋다. 
+
+mutation을 할 때는 반환형을 반드시 표기해준다. 예를 들어 
+```
+mutation {
+  createHong(input: {
+    age : 28, 
+    dream : "개발자", 
+    name : "아무래도" 
+  })
+}
+```
+
+이렇게 하면 안되고
+
+```
+mutation {
+  createHong(input: {
+    age : 28, 
+    dream : "개발자", 
+    name : "아무래도" 
+  })
+}
+```
+
+이렇게 해야 한다. 
+```
+mutation {
+  createHong(input: {
+    age : 28, 
+    dream : "개발자", 
+    name : "아무래도" 
+  }){
+    age
+    dream
+  }
+}
+```
+
+요청을 보낼때도 원래의 스키마에 맞게 보내야 한다 그렇지 않다면 400번의 애러를 반환한다. 이렇게 비즈니스 로직에서 처리를 하는게 아니라 Type처리로 한번에 해결하는 장점이 있다. 
+```
+const query = `mutation createHong($input : HongInput){
+    createHong(input : $input){
+        age
+    }
+}`;
+```
+이런식으로 해야 하는데 이렇게 age나 그런것들을 안맞춰준다면 바로 애러를 뿜어낸다. 훌륭하다. 
+

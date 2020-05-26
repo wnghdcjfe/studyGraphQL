@@ -13,11 +13,17 @@ var schema = buildSchema(`
     content : String
     author : String
   }
+  type Message2 { 
+    content : String
+    author : String
+  }
+
   type Query {
     getMessage(id : ID!) : Message
   }
   type Mutation {
     createMessage(input : MessageInput) : Message
+    createMessage2(input : MessageInput) : Message2
     updateMessage(id : ID!, input : MessageInput) : Message
   } 
 `);
@@ -30,6 +36,13 @@ class Message {
     this.author = author;
   }
 }
+class Message2 {
+  constructor({content, author}) { 
+    this.content = content;
+    this.author = author;
+  }
+}
+
 
 let obj = {}
 const root = {
@@ -41,6 +54,11 @@ const root = {
     const id = require('crypto').randomBytes(10).toString('hex')
     obj[id] = input
     return new Message(id, input)
+  }, 
+  createMessage2 : ({input}) =>{
+    const id = require('crypto').randomBytes(10).toString('hex')
+    obj[id] = input
+    return new Message2(input)
   }, 
   updateMessage : ({id, input}) => {
     if(!obj[id])throw new Error("이런 아이디가 없네. ")
@@ -54,4 +72,24 @@ app.use('/graphql', graphqlHTTP({
   rootValue : root, 
   graphiql : true
 }))
-app.listen(12010, () => console.log("서버시작")) 
+app.listen(12011, () => console.log("서버시작")) 
+/*
+mutation {
+  createMessage(input: {
+    author: "andy",
+    content: "hope is a good thing",
+  }) {
+    id
+  }
+}
+mutation {
+  createMessage2(input: {
+    author: "andy",
+    content: "hope is a good thing",
+  })
+  {
+    content
+    author
+  }
+}
+*/

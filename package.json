@@ -2,9 +2,10 @@
   "name": "studygraphql",
   "version": "1.0.0",
   "description": "악사야 풍악을 울려라",
-  "main": "input.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "start" : "nodemon -e js,json,graphql"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,9 @@
   },
   "homepage": "https://github.com/wnghdcjfe/studyGraphQL#readme",
   "dependencies": {
+    "apollo-server": "^2.13.1",
+    "axios": "^0.19.2",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "graphql": "^15.0.0"
