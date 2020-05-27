@@ -171,3 +171,15 @@ const query = `mutation createHong($input : HongInput){
 ```
 이런식으로 해야 하는데 이렇게 age나 그런것들을 안맞춰준다면 바로 애러를 뿜어낸다. 훌륭하다. 
 
+
+역시나 구조분해가 가능하다. 
+즉, 이런식의 코딩이 가능한 것. 
+```
+        allPhotos : (parent, {after}) => {
+            console.log(after)
+            return photos
+        }
+```
+parent는 나중에 url할 때 활용하는 것이고 after 등 다른 인자들을 받을 때 이렇게 하면 더 좋다. 
+
+아니 왜 created안되냐..
