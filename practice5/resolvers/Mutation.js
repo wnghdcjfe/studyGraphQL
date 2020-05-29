@@ -15,8 +15,13 @@ module.exports = {
       userID: currentUser.githubLogin,
       created: new Date()
     }
-
-    const { insertedIds } = await db.collection('photos').insert(newPhoto)
+    console.log(`
+    
+      유저가 등록되었습니다
+    
+    `)
+    console.log(newPhoto)
+    const { insertedIds } = await db.collection('photos').insertOne(newPhoto)
     newPhoto.id = insertedIds[0]
 
     return newPhoto
@@ -59,7 +64,7 @@ module.exports = {
     const { ops:[user] } = await db
       .collection('users')
       .replaceOne({ githubLogin: login }, latestUserInfo, { upsert: true })
-
+    console.log(user)
     return { user, token: access_token }
   
   },
@@ -76,7 +81,7 @@ module.exports = {
       githubToken: r.login.sha1
     }))
 
-    await db.collection('users').insert(users)
+    await db.collection('users').insertMany(users)
 
     return users
   },

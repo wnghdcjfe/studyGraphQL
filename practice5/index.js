@@ -14,17 +14,20 @@ async function start() {
   let db
 
   try {
-    const client = await MongoClient.connect(MONGO_DB, { useNewUrlParser: true,  useUnifiedTopology: true})
+    const client = await MongoClient.connect(MONGO_DB, { useNewUrlParser: true })
     db = client.db()
   } catch (error) {
     console.log(`
     
-      Mongo DB에 연결이 안됩니다.  
+      Mongo DB Host not found!
+      please add DB_HOST environment variable to .env file
+
+      exiting...
        
     `)
     process.exit(1)
   }
-
+  
   const server = new ApolloServer({
     typeDefs,
     resolvers,

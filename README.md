@@ -2,7 +2,7 @@
 악사야 풍악을 울려라
 
 공부방법
-0. 그래프 QL 공식사이트
+0. 그래프 QL 공식사이트[완료]
  - Getting Started
  - Running Express + GraphQL
  - GraphQL Clients
@@ -13,23 +13,23 @@
 
 여까지 하면 된다. 
 
-1. 책예제 : https://github.com/MoonHighway/learning-graphql/tree/master/chapter-03
- - 3장 : http://snowtooth.moonhighway.com/
+1. 책예제 : https://github.com/MoonHighway/learning-graphql/tree/master/chapter-03 [완료]
+ - 3장참고 : http://snowtooth.moonhighway.com/
 
 2. 승원 : https://velog.io/@cadenzah/graphql-node-01-introduction
 
 3. 채팅 : https://medium.com/wasd/graphql%EA%B3%BC-react%EB%A1%9C-%EC%B1%84%ED%8C%85-%EA%B5%AC%ED%98%84-server-side-672a289c9d14
 
-4. 책 훑어보기 
+4. 책 훑어보기  
 
-## 질문사항
-1. 왜 String!이 아폴로에서 안먹는거야..
+## env설정
 ```
-const typeDefs = gql`
-    type Query {
-        hello : String!
-이렇게 하면 안되지? 
-"Cannot use GraphQLNonNull \"String!\" from another module or realm.
+DB_HOST= 
+CLIENT_ID= 
+CLIENT_SECRET= 
+
+REACT_APP_CLIENT_ID= 
+
 ```
 
 ## 요약사항
@@ -180,6 +180,30 @@ const query = `mutation createHong($input : HongInput){
             return photos
         }
 ```
-parent는 나중에 url할 때 활용하는 것이고 after 등 다른 인자들을 받을 때 이렇게 하면 더 좋다. 
+parent는 나중에 url할 때 활용하는 것이고 after 등 다른 인자들을 받을 때 이렇게 하면 더 좋다.  
 
-아니 왜 created안되냐..
+
+input 에 value를 넣을 때는 이렇게 넣으면 됨. (플레이그라운드 기준)
+```
+mutation post($input : PostPhotoInput!){
+    postPhoto(input : $input){
+        id
+        url
+        postedBy{
+            name
+            avatar
+        }
+    }
+}
+
+{
+  "input": {
+  	"name": "홍철"
+	}
+}
+``` 
+
+## react-apollo
+책보면서 하다보면 애러가 뜨는 슬픈 전설이 있는데 바로 react-apollo버전 때문이다. 지금 버전은 3.x, 근데 책의 버전은 2.x라서 Query컴포넌트가 없어서 힘듬.. 이 점 유의해주시길 바람. 참고로 삽질 1시간동안 함 ㅠㅠ
+
+ 
