@@ -1,28 +1,40 @@
 const { authorizeWithGithub } = require('../lib')
 const fetch = require('node-fetch')
 const { ObjectID } = require('mongodb')
+const { uploadStream } = require('../lib')
+const path = require('path')
 
 module.exports = {
 
-  async postPhoto(parent, args, { db, currentUser }) {
+  async postPhoto(parent, args, { db, currentUser, pubsub }) {
 
     if (!currentUser) {
       throw new Error('only an authorized user can post a photo')
-    }
-
+    } 
     const newPhoto = {
       ...args.input,
       userID: currentUser.githubLogin,
       created: new Date()
-    }
+    } 
     console.log(`
     
-      유저가 등록되었습니다
+      새로운 사진이 등록되었습니다
     
-    `)
+    `)  
     console.log(newPhoto)
-    const { insertedIds } = await db.collection('photos').insertOne(newPhoto)
-    newPhoto.id = insertedIds[0]
+     
+    const { insertedId } = await db.collection('photos').insertOne(newPhoto)
+    console.log(`사진의 id : ${insertedId}`)
+
+    newPhoto.id = insertedId
+    const photo_path =  path.join(__dirname, '../assets/photos', `${newPhoto.id}.jpg`)
+    console.log(`사진의 path : ${photo_path}`)
+
+    //Promise로 래핑되어있는 것을 푼다. 
+    const { createReadStream } = await args.input.file 
+    const stream = createReadStream(); 
+    await uploadStream(stream, photo_path) 
+    pubsub.publish('photo-added', { newPhoto }) 
 
     return newPhoto
 
@@ -59,29 +71,37 @@ module.exports = {
       githubLogin: login,
       githubToken: access_token,
       avatar: avatar_url
-    }
-    console.log(latestUserInfo)
-    const { ops:[user] } = await db
-      .collection('users')
-      .replaceOne({ githubLogin: login }, latestUserInfo, { upsert: true })
-    console.log(user)
+    }   
+    const { ops:[user], result } = await db.collection('users').replaceOne({ githubLogin: login }, latestUserInfo, { upsert: true }) 
+    console.log("유저정보를 받았습니다.")
+    console.log(user) 
+    result.upserted && pubsub.publish('user-added', { newUser: user })
+
     return { user, token: access_token }
   
   },
 
-  addFakeUsers: async (parent, { count }, { db }) => {
-    var randomUserApi = `https://randomuser.me/api/?results=${count}`
-
-    var { results } = await fetch(randomUserApi).then(res => res.json())
-
-    var users = results.map(r => ({
+  addFakeUsers: async (parent, { count }, { db, pubsub}) => {
+    const RANDOM_USER_API = `https://randomuser.me/api/?results=${count}`
+    const { results } = await fetch(RANDOM_USER_API).then(res => res.json())
+    const users = results.map(r => ({
       githubLogin: r.login.username,
       name: `${r.name.first} ${r.name.last}`,
       avatar: r.picture.thumbnail,
       githubToken: r.login.sha1
     }))
+    console.log(users)
 
     await db.collection('users').insertMany(users)
+    
+    const newUsers = await db.collection('users')
+                             .find()
+                             .sort({ _id: -1 })
+                             .limit(count)
+                             .toArray()
+    console.log(newUsers)
+    newUsers.forEach(newUser => pubsub.publish('user-added', {newUser}))
+      
 
     return users
   },

@@ -1,5 +1,5 @@
 # studyGraphQL
-악사야 풍악을 울려라
+악사야 풍악을 울려라 
 
 공부방법
 0. 그래프 QL 공식사이트[완료]
@@ -13,14 +13,37 @@
 
 여까지 하면 된다. 
 
-1. 책예제 : https://github.com/MoonHighway/learning-graphql/tree/master/chapter-03 [완료]
- - 3장참고 : http://snowtooth.moonhighway.com/
+1. 책예제 : https://github.com/MoonHighway/learning-graphql [완료] 
 
-2. 승원 : https://velog.io/@cadenzah/graphql-node-01-introduction
+## 책보면서 주의할 점. 
+deprecated된 것도 많고 npm install했을 때 안되는 것도 있음. 내
+```
+1. insertedIds가 아니라 insertedId이다. 
+2. compose는 사라진지 오래이다. lodash의 compose를 이용하자. 
+3. File upload property ‘stream’ is deprecated. Use ‘createReadStream()’ instead.
+4. react-apollo버전 때문이다. 지금 버전은 3.x, 근데 책의 버전은 2.x라서 Query컴포넌트가 없음.  
+```
+
+2. GraphQL - Node Tutorial : https://velog.io/@cadenzah/graphql-node-01-introduction
 
 3. 채팅 : https://medium.com/wasd/graphql%EA%B3%BC-react%EB%A1%9C-%EC%B1%84%ED%8C%85-%EA%B5%AC%ED%98%84-server-side-672a289c9d14
 
 4. 책 훑어보기  
+
+## GraphQL 쿼리
+```
+subscription {
+  new Photo{
+    url
+    category
+    postedBy{
+      githubLogin
+      avatar
+    }
+  }
+}
+```
+
 
 ## env설정
 ```
@@ -202,8 +225,6 @@ mutation post($input : PostPhotoInput!){
 	}
 }
 ``` 
-
-## react-apollo
-책보면서 하다보면 애러가 뜨는 슬픈 전설이 있는데 바로 react-apollo버전 때문이다. 지금 버전은 3.x, 근데 책의 버전은 2.x라서 Query컴포넌트가 없어서 힘듬.. 이 점 유의해주시길 바람. 참고로 삽질 1시간동안 함 ㅠㅠ
+ 
 
  

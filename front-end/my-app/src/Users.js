@@ -47,7 +47,7 @@ const UserList = ({ count, users, refetch }) =>
             }
         </Mutation>
         <ul>
-            {users.map(user => 
+            {users.filter(user => user).map(user => 
                 <UserListItem key={user.githubLogin} 
                     name={user.name}
                     avatar={user.avatar} />
