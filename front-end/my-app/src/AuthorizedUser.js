@@ -60,9 +60,9 @@ class AuthorizedUser extends Component {
         console.log(data, ROOT_QUERY)
     }
 
-    requestCode() {
-        var clientID = process.env.REACT_APP_CLIENT_ID
-        window.location = `https://github.com/login/oauth/authorize?client_id=${clientID}&scope=user`
+    requestCode() {  
+        const ID = process.env.REACT_APP_CLIENT_ID 
+        window.location = `https://github.com/login/oauth/authorize?client_id=${ID}&scope=user`
     }
 
     render() {

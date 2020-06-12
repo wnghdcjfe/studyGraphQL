@@ -2,7 +2,7 @@ const { authorizeWithGithub } = require('../lib')
 const fetch = require('node-fetch')
 const { ObjectID } = require('mongodb')
 const { uploadStream } = require('../lib')
-const path = require('path')
+const path = require('path') 
 
 module.exports = {
 
@@ -15,24 +15,20 @@ module.exports = {
       ...args.input,
       userID: currentUser.githubLogin,
       created: new Date()
-    } 
+    }   
+    const { insertedId } = await db.collection('photos').insertOne(newPhoto)
+
     console.log(`
     
-      새로운 사진이 등록되었습니다
+      새로운 사진이 등록되었습니다 ${insertedId}
     
-    `)  
-    console.log(newPhoto)
-     
-    const { insertedId } = await db.collection('photos').insertOne(newPhoto)
-    console.log(`사진의 id : ${insertedId}`)
+    `)   
 
     newPhoto.id = insertedId
     const photo_path =  path.join(__dirname, '../assets/photos', `${newPhoto.id}.jpg`)
-    console.log(`사진의 path : ${photo_path}`)
-
     //Promise로 래핑되어있는 것을 푼다. 
-    const { createReadStream } = await args.input.file 
-    const stream = createReadStream(); 
+    const { createReadStream } = await args.input.file  
+    const stream = createReadStream();  
     await uploadStream(stream, photo_path) 
     pubsub.publish('photo-added', { newPhoto }) 
 

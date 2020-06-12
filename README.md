@@ -16,7 +16,7 @@
 1. 책예제 : https://github.com/MoonHighway/learning-graphql [완료] 
 
 ## 책보면서 주의할 점. 
-deprecated된 것도 많고 npm install했을 때 안되는 것도 있음. 내
+deprecated된 것도 많고 npm install했을 때 안되는 것도 있음. 
 ```
 1. insertedIds가 아니라 insertedId이다. 
 2. compose는 사라진지 오래이다. lodash의 compose를 이용하자. 
@@ -45,15 +45,17 @@ subscription {
 ```
 
 
-## env설정
+## env설정 
 ```
-DB_HOST= 
-CLIENT_ID= 
-CLIENT_SECRET= 
-
-REACT_APP_CLIENT_ID= 
+DB_HOST=mongodb://localhost:27017/practice
+CLIENT_ID=
+CLIENT_SECRET=
+REACT_APP_CLIENT_ID
 
 ```
+클라이언트 아이디는 gihub > setting > oauthApps 에 있다. 
+리액트클라이언트 아이디로 다시 써줘야 하는데 리액트의 npm start를 할 때 이런 명으로 안쓰면 읽지를 못한다. 
+
 
 ## 요약사항
 

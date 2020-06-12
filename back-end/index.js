@@ -14,7 +14,7 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 }
 
-require('dotenv').config()
+require('dotenv').config() 
 var typeDefs = readFileSync('./typeDefs.graphql', 'UTF-8')
 
 async function start() {
@@ -56,7 +56,7 @@ async function start() {
   app.use(cors(corsOptions));
   app.get('/playground', expressPlayground({ endpoint: '/graphql' }))
   
-  app.get('/', (req, res) => {
+  app.get('/', (req, res) => { 
     let url = `https://github.com/login/oauth/authorize?client_id=${process.env.CLIENT_ID}&scope=user`
     res.end(`<a href="${url}">Sign In with Github</a>`)
   })

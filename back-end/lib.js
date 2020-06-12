@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 const fs = require('fs')
-
+const {WriteStream} = require('fs-capacitor')
 const findBy = (value, array, field='id') => array[array.map(item=>item[field]).indexOf(value)]
 
 const generateFakeUsers = count => 
@@ -30,13 +30,14 @@ const authorizeWithGithub = async credentials => {
 }
 
 const uploadStream = (stream, path) => 
-    new Promise((resolve, reject) => {
-        stream.on('error', error => {
-            if (stream.truncated) {
-                fs.unlinkSync(path)
-            }
-            reject(error)
-        }).on('end', resolve)
-        .pipe(fs.createWriteStream(path))
+    new Promise((resolve, reject) => { 
+        const capacitor = new WriteStream() 
+        const destination = fs.createWriteStream(path); 
+        stream.pipe(capacitor)
+        capacitor
+            .createReadStream() 
+            .pipe(destination)
+            .on('error', reject)
+            .on('finish', resolve) 
     }) 
 module.exports = {findBy, authorizeWithGithub, generateFakeUsers, uploadStream}
