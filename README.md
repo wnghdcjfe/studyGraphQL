@@ -1,5 +1,12 @@
-# studyGraphQL
-악사야 풍악을 울려라 
+# studyGraphQL 
+그래프QL을 공부하는 공간입니다. 
+
+front-end : my-app 에서 `npm run start`
+back-end : `node index.js`
+
+버전
+node.js : 14.4.0
+mongodb : 
 
 공부방법
 0. 그래프 QL 공식사이트[완료]
@@ -9,11 +16,13 @@
  - Basic Types
  - Passing Arguments
  - Object Types
- - Mutations and Input Types
-
-여까지 하면 된다. 
+ - Mutations and Input Types 
 
 1. 책예제 : https://github.com/MoonHighway/learning-graphql [완료] 
+
+2. GraphQL - Node Tutorial : https://velog.io/@cadenzah/graphql-node-01-introduction
+
+3. 채팅 : https://medium.com/wasd/graphql%EA%B3%BC-react%EB%A1%9C-%EC%B1%84%ED%8C%85-%EA%B5%AC%ED%98%84-server-side-672a289c9d14
 
 ## 책보면서 주의할 점. 
 deprecated된 것도 많고 npm install했을 때 안되는 것도 있음. 
@@ -24,11 +33,6 @@ deprecated된 것도 많고 npm install했을 때 안되는 것도 있음.
 4. react-apollo버전 때문이다. 지금 버전은 3.x, 근데 책의 버전은 2.x라서 Query컴포넌트가 없음.  
 ```
 
-2. GraphQL - Node Tutorial : https://velog.io/@cadenzah/graphql-node-01-introduction
-
-3. 채팅 : https://medium.com/wasd/graphql%EA%B3%BC-react%EB%A1%9C-%EC%B1%84%ED%8C%85-%EA%B5%AC%ED%98%84-server-side-672a289c9d14
-
-4. 책 훑어보기  
 
 ## GraphQL 쿼리
 ```

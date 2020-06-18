@@ -20,8 +20,7 @@ export default class PostPhoto extends Component {
         file: ''
     }
 
-    postPhoto = async (mutation) => {  
-        console.log(this.state)
+    postPhoto = async (mutation) => {   
         await mutation({
             variables: {
                 input: this.state

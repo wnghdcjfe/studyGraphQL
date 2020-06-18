@@ -31,13 +31,13 @@ const authorizeWithGithub = async credentials => {
 
 const uploadStream = (stream, path) => 
     new Promise((resolve, reject) => { 
-        const capacitor = new WriteStream() 
-        const destination = fs.createWriteStream(path); 
+        const capacitor = new WriteStream()  
+        const destination = fs.createWriteStream(path);  
         stream.pipe(capacitor)
         capacitor
             .createReadStream() 
             .pipe(destination)
             .on('error', reject)
-            .on('finish', resolve) 
+            .on('finish', resolve)  
     }) 
 module.exports = {findBy, authorizeWithGithub, generateFakeUsers, uploadStream}

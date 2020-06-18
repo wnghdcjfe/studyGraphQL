@@ -1,10 +1,7 @@
-async fakeUserAuth(parent, {githubLogin}, {db}){
-    var user = await db.collection('users').findOne({githubLogin})
-    if(!user){
 
-    }
-    return {
-        token : user.githubToken, 
-        user
-    }
-}
+let aa = [...document.getElementsByClassName('author')]
+console.log(aa)
+
+aa.forEach(element => {
+    console.log(element.getAttribute("href"))
+});

@@ -3,7 +3,7 @@ const fetch = require('node-fetch')
 const { ObjectID } = require('mongodb')
 const { uploadStream } = require('../lib')
 const path = require('path') 
-
+const {WriteStream} = require('fs-capacitor')
 module.exports = {
 
   async postPhoto(parent, args, { db, currentUser, pubsub }) {
@@ -16,22 +16,20 @@ module.exports = {
       userID: currentUser.githubLogin,
       created: new Date()
     }   
-    const { insertedId } = await db.collection('photos').insertOne(newPhoto)
-
+    const { insertedId } = await db.collection('photos').insertOne(newPhoto) 
     console.log(`
     
       새로운 사진이 등록되었습니다 ${insertedId}
     
     `)   
-
+    
     newPhoto.id = insertedId
     const photo_path =  path.join(__dirname, '../assets/photos', `${newPhoto.id}.jpg`)
-    //Promise로 래핑되어있는 것을 푼다. 
-    const { createReadStream } = await args.input.file  
-    const stream = createReadStream();  
+    //Promise로 래핑되어있는 것을 푼다.  
+    const { createReadStream } = await args.input.file    
+    const stream = createReadStream(photo_path);    
     await uploadStream(stream, photo_path) 
-    pubsub.publish('photo-added', { newPhoto }) 
-
+    pubsub.publish('photo-added', { newPhoto })  
     return newPhoto
 
   },
