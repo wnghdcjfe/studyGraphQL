@@ -4,10 +4,12 @@
 front-end : my-app 에서 `npm run start`
 back-end : `node index.js`
 
-버전
-node.js : 14.4.0
-mongodb : 
-
+## compatible version  
+```
+node.js : 12.18.0
+mongodb : 4.2.7
+```
+ 
 공부방법
 0. 그래프 QL 공식사이트[완료]
  - Getting Started
