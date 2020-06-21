@@ -68,8 +68,7 @@ const App = ({client}) =>{
     
     return () =>{ 
       listenForUsers.unsubscribe(); 
-      listenForPhotos.unsubscribe();  
-      listenForUsers = listenForPhotos = null; 
+      listenForPhotos.unsubscribe();   
     }
   }, [])
   return (

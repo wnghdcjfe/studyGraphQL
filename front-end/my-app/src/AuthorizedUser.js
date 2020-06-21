@@ -56,8 +56,7 @@ class AuthorizedUser extends Component {
         localStorage.removeItem('token')
         let data = this.props.client.readQuery({ query: ROOT_QUERY })
         data.me = null  
-        this.props.client.writeQuery({ query: ROOT_QUERY, data })
-        console.log(data, ROOT_QUERY)
+        this.props.client.writeQuery({ query: ROOT_QUERY, data }) 
     }
 
     requestCode() {  
