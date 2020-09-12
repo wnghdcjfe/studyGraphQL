@@ -31,6 +31,6 @@
     "graphql-request": "^2.0.0",
     "graphql-validation-complexity": "^0.3.0",
     "mongodb": "^3.5.7",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   }
 }
